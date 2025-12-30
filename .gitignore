@@ -1,0 +1,13 @@
+# 빌드
+**/Build/*
+**/Output/*
+
+# Visual Studio
+Src/Suseong-Html-Analyzer/Suseong-Html-Analyzer.vcproj.user
+.vs/
+
+# Cmake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile

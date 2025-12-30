@@ -1,0 +1,14 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="DebugMT" />
+    <BuildType Name="Release" />
+    <BuildType Name="ReleaseMT" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Suseong-Html-Analyzer.vcxproj">
+    <BuildType Solution="Debug|x86" Project="ReleaseMT" />
+    <Platform Solution="Debug|x86" Project="x64" />
+  </Project>
+</Solution>
