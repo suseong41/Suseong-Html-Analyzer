@@ -141,7 +141,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -158,7 +158,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -173,7 +173,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -190,13 +190,13 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
@@ -210,13 +210,13 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
@@ -225,7 +225,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
