@@ -1,13 +1,21 @@
 #include "pch.h"
 
-int main(int argc, char* argv[])
+ECODE main(int argc, char* argv[])
 {
-	if (1 < argc) 
+	if (argc < 2 || 4 < argc)
 	{
-		printf("useage: %s [arguments]\n", argv[0]);
+		printf("usage: ./Suseong-Html-Analyzer <htmlfile> [url]\n");
+		return EC_INVALID_ARGUMENT;
 	}
 
 	printf("Hello World!\n");
 
-	return 0;
+	char* htmlFile = argv[1];
+	char* targetUrl = NULL;
+	if (3 <= argc)
+	{
+		targetUrl = argv[2];
+	}
+
+	return EC_SUCCESS;
 }
