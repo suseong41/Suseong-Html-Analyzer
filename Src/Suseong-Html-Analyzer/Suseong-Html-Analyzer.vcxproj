@@ -233,11 +233,13 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HtmlHelper.cpp" />
     <ClCompile Include="HtmlParser.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HtmlHelper.h" />
     <ClInclude Include="HtmlParser.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
