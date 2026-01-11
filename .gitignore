@@ -3,7 +3,7 @@
 **/Output/*
 
 # Visual Studio
-Src/Suseong-Html-Analyzer/Suseong-Html-Analyzer.vcxproj.user
+*.user
 .vs/
 
 # Cmake
