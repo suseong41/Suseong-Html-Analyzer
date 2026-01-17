@@ -1,30 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="HelperTest.cpp">
+      <Filter>Test</Filter>
     </ClCompile>
     <ClCompile Include="ParserTest.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.cpp">
+      <Filter>Target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.cpp">
+      <Filter>Target</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp">
+      <Filter>Target</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Test">
+      <UniqueIdentifier>{cc771331-42b0-4497-b789-5c1421dde25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Target">
+      <UniqueIdentifier>{dd9ffef2-28b3-44e9-8c54-cf0260f6284c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.h">
+      <Filter>Target</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.h">
+      <Filter>Target</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.h">
+      <Filter>Target</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -99,36 +99,36 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">
-    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)</OutDir>
-    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)</IntDir>
+    <OutDir>$(ProjectDir)..\..\Build\$(Platform)$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)..\..\Output\$(Platform)$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -143,8 +143,13 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -161,8 +166,13 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -172,13 +182,19 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\gTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -195,50 +211,89 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\gTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\gTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMT|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\gTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMT|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\gTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\gTest\lib;$(ProjectDir)..\..\gTest\lib\manual-link;$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.cpp" />
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.cpp" />
+    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp" />
+    <ClCompile Include="HelperTest.cpp" />
     <ClCompile Include="ParserTest.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.h" />
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.h" />
+    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
