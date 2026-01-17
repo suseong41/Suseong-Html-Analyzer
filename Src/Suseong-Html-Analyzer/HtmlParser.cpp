@@ -67,10 +67,7 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 			{
 				if (!m_buffer.empty())
 				{
-					if (m_pHandler != nullptr)
-					{
-						m_pHandler->OnScriptTextParsed(m_buffer);
-					}
+					m_buffer.clear();
 				}
 				m_state = STATE_TAG_OPEN;
 				m_currentToken = ST_HTML_TOKEN();
@@ -89,10 +86,9 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 			else if (c == '!') // ¡÷ºÆ, DOCTYPE
 			{
 				m_state = STATE_TEXT_CONTENT;
-				m_buffer += '<';
-				m_buffer += c;
+				m_buffer += "<!";
 			}
-			else if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || c == '?')
+			else if (isalpha(c) || c == '?')
 			{
 				m_state = STATE_TAG_NAME;
 				m_buffer += c;
