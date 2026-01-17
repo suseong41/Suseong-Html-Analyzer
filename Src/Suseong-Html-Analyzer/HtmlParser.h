@@ -9,6 +9,18 @@ struct ST_HTML_TOKEN
 	std::vector<std::pair<std::string, std::string>> attr;
 };
 
+class IHtmlParserHandler
+{
+public:
+	// virtual IHtmlParserHandler() {}
+	virtual ~IHtmlParserHandler() {}
+
+	virtual void OnTokenParsed(const ST_HTML_TOKEN& token) = 0;
+	//virtual void OnTextParsed(const std::string& text) = 0;
+	virtual void OnScriptTextParsed(const std::string& text) = 0;
+private:
+};
+
 class CHtmlParser
 {
 public:
@@ -16,6 +28,7 @@ public:
 	~CHtmlParser();
 
 	void Parse(const char* html, UINT64 length);
+	void SetHandler(IHtmlParserHandler* pHandler);
 
 private:
 	enum STATE
@@ -35,8 +48,6 @@ private:
 	void FlushToken();
 	void HandleAttribute(const std::string& key, const std::string& value);
 	bool IsScriptTag(const std::string& tagName);
-	void AnalyzeToken(const ST_HTML_TOKEN& token);
-	void AnalyzeText(const std::string& text);
 
 	STATE m_state;
 	std::string m_buffer;
@@ -45,4 +56,6 @@ private:
 
 	ST_HTML_TOKEN m_currentToken;
 	bool m_inScript;
+
+	IHtmlParserHandler* m_pHandler;
 };

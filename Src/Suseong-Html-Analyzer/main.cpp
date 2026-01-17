@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "HtmlParser.h"
+#include "HtmlAnalyzer.h"
 
 ECODE main(int argc, char* argv[])
 {
@@ -19,6 +20,12 @@ ECODE main(int argc, char* argv[])
 	{
 		targetUrl = argv[2];
 	}
+
+	CHtmlParser HtmlParser;
+	CHtmlAnalyzer HtmlAnalyzer;
+
+	HtmlParser.SetHandler(&HtmlAnalyzer);
+
 
 	// 분석 종료
 	std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();

@@ -9,11 +9,18 @@ CHtmlParser::CHtmlParser()
 	m_state = STATE_TEXT_CONTENT;
 	m_inScript = false;
 	m_quoteChar = 0;
+	m_pHandler = nullptr;
 }
 CHtmlParser::~CHtmlParser() {}
 
+void CHtmlParser::SetHandler(IHtmlParserHandler* pHandler)
+{
+	m_pHandler = pHandler;
+}
+
 void CHtmlParser::Parse(const char* Html, UINT64 length)
 {
+	if (Html == nullptr || length == 0) return;
 	m_state = STATE_TEXT_CONTENT;
 	m_buffer.clear();
 	m_inScript = false;
@@ -40,12 +47,12 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 					}
 					if (isClosingScript)
 					{
-						AnalyzeText(m_buffer);
-
+						if (m_pHandler != nullptr)
+						{
+							m_pHandler->OnScriptTextParsed(m_buffer);
+						}
 						m_buffer.clear();
 						m_inScript = false;
-						m_state = STATE_TAG_OPEN;
-						continue;
 					}
 				}
 			}
@@ -60,8 +67,10 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 			{
 				if (!m_buffer.empty())
 				{
-					AnalyzeText(m_buffer);
-					m_buffer.clear();
+					if (m_pHandler != nullptr)
+					{
+						m_pHandler->OnScriptTextParsed(m_buffer);
+					}
 				}
 				m_state = STATE_TAG_OPEN;
 				m_currentToken = ST_HTML_TOKEN();
@@ -238,32 +247,23 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 
 void CHtmlParser::FlushToken()
 {
-	// 시그니처 분석
-	AnalyzeToken(m_currentToken);
+	if (m_pHandler != nullptr)
+	{
+		m_pHandler->OnTokenParsed(m_currentToken);
+	}
 
-	// 스크립트 태그 확인
 	if (!m_currentToken.isClosing && !m_currentToken.isSelfClosing && IsScriptTag(m_currentToken.tagName))
 	{
 		m_inScript = true;
 	}
 
-	// 상태 초기화
+	m_currentToken = ST_HTML_TOKEN();
 	m_state = STATE_TEXT_CONTENT;
 }
 
 void CHtmlParser::HandleAttribute(const std::string& key, const std::string& value)
 {
 	m_currentToken.attr.push_back({ key, value });
-}
-
-void CHtmlParser::AnalyzeToken(const ST_HTML_TOKEN& token)
-{
-	// 탐지 로직 작성 필요
-}
-
-void CHtmlParser::AnalyzeText(const std::string& text)
-{
-	// 탐지 로직 작성 필요
 }
 
 bool CHtmlParser::IsScriptTag(const std::string& tagName)
