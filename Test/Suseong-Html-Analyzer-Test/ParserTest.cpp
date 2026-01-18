@@ -169,3 +169,92 @@ TEST(ParserTest, Empty)
 	EXPECT_EQ(test.capToken[0].attr[1].first, "id");
 	EXPECT_EQ(test.capToken[0].attr[1].second, "main");
 }
+
+TEST(ParserTest, spaceScriptTag)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string scriptContent = "alert(1)";
+	std::string html = "<script>" + scriptContent + "</script   >";
+
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_TRUE(test.capToken[1].isClosing);
+	EXPECT_EQ(test.capScript.size(), 1);
+	EXPECT_EQ(test.capScript[0], scriptContent);
+}
+
+TEST(ParserTest, AttrSelfClosing)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<img src=test.jpg/>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 1);
+	EXPECT_EQ(test.capToken[0].tagName, "img");
+	EXPECT_EQ(test.capToken[0].attr[0].second, "test.jpg");
+	EXPECT_TRUE(test.capToken[0].isSelfClosing);
+}
+
+TEST(ParserTest, DuplicatedAttr)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<img src=\"bad.exe\" src='good.jpg'>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 1);
+	EXPECT_EQ(test.capToken[0].attr.size(), 2);
+
+	EXPECT_EQ(test.capToken[0].attr[0].first, "src");
+	EXPECT_EQ(test.capToken[0].attr[0].second, "bad.exe");
+	EXPECT_EQ(test.capToken[0].attr[1].first, "src");
+	EXPECT_EQ(test.capToken[0].attr[1].second, "good.jpg");
+}
+
+TEST(ParserTest, Unfinished)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<div id=main";
+	parser.Parse(html.c_str(), html.length());
+
+	if (0 < test.capToken.size())
+	{
+		EXPECT_EQ(test.capToken[0].tagName, "div");
+		EXPECT_EQ(test.capToken[0].attr[0].first, "id");
+		EXPECT_EQ(test.capToken[0].attr[0].second, "main");
+	}
+	else
+	{
+		core::Log_Error("Unfinished Tag Dropped\n");
+	}
+}
+
+TEST(ParserTest, NullByteAttr)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string val = "cmd.exe"; // 7
+	val.push_back('\0'); // 1
+	val.append(".jpg"); // 4
+
+	std::string html = "<a href='" + val + "'>link</a>";
+
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_EQ(test.capToken[0].attr[0].second.size(), 12);
+}
