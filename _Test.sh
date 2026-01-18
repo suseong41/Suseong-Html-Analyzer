@@ -73,7 +73,14 @@ log_success "Build Completed Successfully!"
 log_header "Running Google Tests"
 set +e
 if [ -f "$TEST_EXECUTABLE" ]; then
-    "$TEST_EXECUTABLE"
+    TEST_DIR=$(dirname "$TEST_EXECUTABLE")
+    TEST_BIN=$(basename "$TEST_EXECUTABLE")
+
+    echo "Changing directory to: $TEST_DIR"
+    (
+        cd "$TEST_DIR" && "./$TEST_BIN"
+    )
+    
     TEST_RESULT=$?
 else
     echo -e "${RED}Error: Test executable not found!${NC}"
