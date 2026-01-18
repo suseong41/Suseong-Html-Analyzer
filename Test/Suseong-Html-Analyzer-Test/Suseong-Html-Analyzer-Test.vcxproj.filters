@@ -19,6 +19,9 @@
     <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp">
       <Filter>Target</Filter>
     </ClCompile>
+    <ClCompile Include="FileTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Test">

@@ -286,6 +286,7 @@
     <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.cpp" />
     <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.cpp" />
     <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp" />
+    <ClCompile Include="FileTest.cpp" />
     <ClCompile Include="HelperTest.cpp" />
     <ClCompile Include="ParserTest.cpp" />
     <ClCompile Include="pch.cpp" />
