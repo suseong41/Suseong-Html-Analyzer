@@ -1,36 +1,171 @@
 #include "pch.h"
 #include "../../Src/Suseong-Html-Analyzer/HtmlParser.h"
 
+// ASSERT -> 반환
+// EXPECT -> 계속 실행
+
 class HtmlParserTest : public IHtmlParserHandler
 {
 public:
-	std::vector<ST_HTML_TOKEN> capturedTokens;
-	std::vector<std::string> capturedScripts;
+	std::vector<ST_HTML_TOKEN> capToken;
+	std::vector<std::string> capScript;
 	void OnTokenParsed(const ST_HTML_TOKEN& token) override
 	{
-		capturedTokens.push_back(token);
+		capToken.push_back(token);
 	}
 	void OnScriptTextParsed(const std::string& text) override
 	{
-		capturedScripts.push_back(text);
+		capScript.push_back(text);
 	}
 
 private:
 };
 
-TEST(ParserTest, LowerCase)
+// 태그 이름 소문자 변환 및 공백 처리 확인
+TEST(ParserTest, LowerCase) 
 {
 	CHtmlParser parser;
 	HtmlParserTest test;
 	parser.SetHandler(&test);
 
-	std::string html = "<DIV><div >"; // 대문자, 공백
+	std::string html = "<DIV></div >"; // 대문자, 공백
 	parser.Parse(html.c_str(), html.length());
 
-	ASSERT_EQ(test.capturedTokens.size(), 2);
-	EXPECT_EQ(test.capturedTokens[0].tagName, "div");
-	EXPECT_FALSE(test.capturedTokens[0].isClosing);
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_EQ(test.capToken[0].tagName, "div");
+	EXPECT_FALSE(test.capToken[0].isClosing);
 
-	EXPECT_EQ(test.capturedTokens[1].tagName, "div");
-	EXPECT_TRUE(test.capturedTokens[1].isClosing);
+	EXPECT_EQ(test.capToken[1].tagName, "div");
+	EXPECT_TRUE(test.capToken[1].isClosing);
+}
+
+// 속성 파싱 테스트
+TEST(ParserTest, Attribute) 
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<img id=\"main\" class='test' width=100>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 1);
+
+	const ST_HTML_TOKEN& token = test.capToken[0];
+	EXPECT_EQ(token.tagName, "img");
+	ASSERT_EQ(token.attr.size(), 3);
+
+	EXPECT_EQ(token.attr[0].first, "id");
+	EXPECT_EQ(token.attr[0].second, "main");
+	EXPECT_EQ(token.attr[1].first, "class");
+	EXPECT_EQ(token.attr[1].second, "test");
+	EXPECT_EQ(token.attr[2].first, "width");
+	EXPECT_EQ(token.attr[2].second, "100");
+}
+
+TEST(ParserTest, ScriptTagContents)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string scriptContent = "\n if (a < b) { alert(1); } \n"; // <b 오류 검사
+	std::string html = "<script>" + scriptContent + "</script>";
+
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_EQ(test.capToken[0].tagName, "script");
+	EXPECT_EQ(test.capToken[1].tagName, "script");
+	EXPECT_TRUE(test.capToken[1].isClosing);
+
+	ASSERT_EQ(test.capScript.size(), 1);
+	EXPECT_EQ(test.capScript[0], scriptContent);
+}
+
+TEST(ParserTest, Abnormal)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<input type=\"checkbox\" checked disabled>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 1);
+	const ST_HTML_TOKEN& token = test.capToken[0];
+
+	EXPECT_EQ(token.attr.size(), 3);
+	EXPECT_EQ(token.attr[1].first, "checked");
+	EXPECT_EQ(token.attr[1].second, "");
+}
+
+TEST(ParserTest, SelfClosing)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<br/><img src='a.jpg' />";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+
+	EXPECT_EQ(test.capToken[0].tagName, "br");
+	EXPECT_TRUE(test.capToken[0].isSelfClosing);
+	EXPECT_FALSE(test.capToken[0].isClosing);
+
+	EXPECT_EQ(test.capToken[1].tagName, "img");
+	EXPECT_TRUE(test.capToken[1].isSelfClosing);
+	EXPECT_EQ(test.capToken[1].attr.size(), 1);
+}
+
+TEST(ParserTest, ScriptAttr)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string code = "var a=1;";
+	std::string html = "<script type='text/javascript'>" + code + "</script>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_EQ(test.capToken[0].tagName, "script");
+	EXPECT_EQ(test.capToken[0].attr.size(), 1);
+
+	ASSERT_EQ(test.capScript.size(), 1);
+	EXPECT_EQ(test.capScript[0], code);
+}
+
+TEST(ParserTest, NamespaceTags)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<svg:script>alert(1)</svg:script>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 2);
+	EXPECT_EQ(test.capToken[0].tagName, "svg:script");
+
+	ASSERT_EQ(test.capScript.size(), 1);
+	EXPECT_EQ(test.capScript[0], "alert(1)");
+}
+
+TEST(ParserTest, Empty)
+{
+	CHtmlParser parser;
+	HtmlParserTest test;
+	parser.SetHandler(&test);
+
+	std::string html = "<div class = \"box\" id= 'main'>";
+	parser.Parse(html.c_str(), html.length());
+
+	ASSERT_EQ(test.capToken.size(), 1);
+	EXPECT_EQ(test.capToken[0].attr[0].first, "class");
+	EXPECT_EQ(test.capToken[0].attr[0].second, "box");
+	EXPECT_EQ(test.capToken[0].attr[1].first, "id");
+	EXPECT_EQ(test.capToken[0].attr[1].second, "main");
 }
