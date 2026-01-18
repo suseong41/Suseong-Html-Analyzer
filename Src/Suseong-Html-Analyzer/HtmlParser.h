@@ -56,6 +56,7 @@ private:
 
 	ST_HTML_TOKEN m_currentToken;
 	bool m_inScript;
+	std::string m_scriptTagName;
 
 	IHtmlParserHandler* m_pHandler;
 };

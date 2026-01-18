@@ -33,18 +33,21 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 		{
 			if (c == '<')
 			{
-				if (i + 8 < length) // /script>가 나오는지 먼저 검사
+				std::string closeTag = "/" + m_scriptTagName + ">";
+				UINT64 closeTagLen = closeTag.length();
+
+				if (i + closeTagLen < length)
 				{
 					bool isClosingScript = true;
-					const char* tagCheck = "/script>";
-					for (int k = 0; k < 8; k++)
+					for (UINT64 k = 0; k < closeTagLen; k++)
 					{
-						if (MakeLower(Html[i + 1 + k]) != tagCheck[k])
+						if (MakeLower(Html[i + k + 1]) != closeTag[k])
 						{
 							isClosingScript = false;
 							break;
 						}
 					}
+
 					if (isClosingScript)
 					{
 						if (m_pHandler != nullptr)
@@ -53,6 +56,11 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 						}
 						m_buffer.clear();
 						m_inScript = false;
+						m_scriptTagName.clear();
+
+						m_state = STATE_TAG_OPEN;
+						m_currentToken = ST_HTML_TOKEN();
+						continue;
 					}
 				}
 			}
@@ -115,6 +123,7 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 				else if (c == '/')
 				{
 					m_currentToken.isSelfClosing = true;
+					m_state = STATE_SCAN_NEXT_ATTR;
 				}
 				else // 속성으로 전환
 				{
@@ -251,6 +260,7 @@ void CHtmlParser::FlushToken()
 	if (!m_currentToken.isClosing && !m_currentToken.isSelfClosing && IsScriptTag(m_currentToken.tagName))
 	{
 		m_inScript = true;
+		m_scriptTagName = m_currentToken.tagName;
 	}
 
 	m_currentToken = ST_HTML_TOKEN();
