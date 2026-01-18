@@ -33,15 +33,15 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 		{
 			if (c == '<')
 			{
-				std::string closeTag = "/" + m_scriptTagName + ">";
+				std::string closeTag = "/" + m_scriptTagName;
 				UINT64 closeTagLen = closeTag.length();
 
-				if (i + closeTagLen < length)
+				if (i + closeTagLen + 1 <= length)
 				{
 					bool isClosingScript = true;
 					for (UINT64 k = 0; k < closeTagLen; k++)
 					{
-						if (MakeLower(Html[i + k + 1]) != closeTag[k])
+						if (MakeLower(Html[i + k + 1]) != MakeLower(closeTag[k]))
 						{
 							isClosingScript = false;
 							break;
@@ -50,17 +50,25 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 
 					if (isClosingScript)
 					{
-						if (m_pHandler != nullptr)
+						UINT64 nextIdx = i + closeTagLen + 1;
+						while (nextIdx < length && (Html[nextIdx] == ' ' || Html[nextIdx] == '\t' || Html[nextIdx] == '\n' || Html[nextIdx] == '\r'))
 						{
-							m_pHandler->OnScriptTextParsed(m_buffer);
+							nextIdx++;
 						}
-						m_buffer.clear();
-						m_inScript = false;
-						m_scriptTagName.clear();
+						if (nextIdx < length && Html[nextIdx] == '>')
+						{
+							if (m_pHandler != nullptr)
+							{
+								m_pHandler->OnScriptTextParsed(m_buffer);
+							}
+							m_buffer.clear();
+							m_inScript = false;
+							m_scriptTagName.clear();
 
-						m_state = STATE_TAG_OPEN;
-						m_currentToken = ST_HTML_TOKEN();
-						continue;
+							m_state = STATE_TAG_OPEN;
+							m_currentToken = ST_HTML_TOKEN();
+							continue;
+						}
 					}
 				}
 			}
@@ -169,6 +177,12 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 					HandleAttribute(m_currentAttrName, "");
 					FlushToken();
 				}
+				else if (c == '/')
+				{
+					HandleAttribute(m_currentAttrName, "");
+					m_currentToken.isSelfClosing = true;
+					m_state = STATE_SCAN_NEXT_ATTR;
+				}
 				else
 				{
 					m_state = STATE_ATTR_EQ_WAIT;
@@ -228,13 +242,18 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 			break;
 
 		case STATE_ATTR_VALUE_RAW:
-			if (c == ' ' || c == '\t' || c == '\n' || c == '>')
+			if (c == ' ' || c == '\t' || c == '\n' || c == '>' || c == '/')
 			{
 				HandleAttribute(m_currentAttrName, m_buffer);
 				m_buffer.clear();
 				if (c == '>')
 				{
 					FlushToken();
+				}
+				else if (c == '/')
+				{
+					m_currentToken.isSelfClosing = true;
+					m_state = STATE_SCAN_NEXT_ATTR;
 				}
 				else
 				{
@@ -246,6 +265,44 @@ void CHtmlParser::Parse(const char* Html, UINT64 length)
 				m_buffer += c;
 			}
 			break;
+		}
+	}
+
+	// 닫힌 태그 및 속성 재생
+	if (m_state != STATE_TEXT_CONTENT && m_state != STATE_TAG_OPEN)
+	{
+		// 마지막에 속성 값을 읽은 경우
+		if (m_state == STATE_ATTR_VALUE_RAW || m_state == STATE_ATTR_VALUE_QUOTED || m_state == STATE_ATTR_VALUE_WAIT)
+		{
+			if (!m_currentAttrName.empty())
+			{
+				HandleAttribute(m_currentAttrName, m_buffer);
+			}
+		}
+		// 속성 이름을 읽은 경우
+		else if (m_state == STATE_ATTR_NAME)
+		{
+			if (!m_buffer.empty())
+			{
+				m_currentAttrName = m_buffer;
+				m_currentAttrName = core::MakeLower(m_currentAttrName);
+				HandleAttribute(m_currentAttrName, "");
+			}
+		}
+		// 태그 이름을 읽은 경우
+		else if (m_state == STATE_TAG_NAME)
+		{
+			if (!m_buffer.empty())
+			{
+				m_currentToken.tagName = m_buffer;
+				m_currentToken.tagName = core::MakeLower(m_currentToken.tagName);
+			}
+		}
+
+		// 유효한 태크 이름을 가지고 있으면 Flush
+		if (!m_currentToken.tagName.empty())
+		{
+			FlushToken();
 		}
 	}
 }
