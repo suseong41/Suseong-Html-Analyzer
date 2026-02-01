@@ -13,10 +13,10 @@ std::string HtmlLoad(const char* htmlfile, const char* targetUrl)
 		return err;
 	}
 #else 
-	fp = fopen(htmlFile, "rb");
+	fp = fopen(htmlfile, "rb");
 	if (fp == nullptr)
 	{
-		return;
+		return err;
 	}
 #endif
 
