@@ -2,7 +2,6 @@
 #include "HtmlParser.h"
 #include "HtmlAnalyzer.h"
 
-
 ECODE main(int argc, char* argv[])
 {
 	if (argc < 2 || 4 < argc)

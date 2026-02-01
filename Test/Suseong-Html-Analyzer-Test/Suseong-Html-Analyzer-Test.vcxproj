@@ -142,6 +142,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+	  <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,6 +165,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -187,6 +189,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+	  <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -209,6 +212,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -228,8 +232,11 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+	  <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
+	  <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\ExternalLib\$(Platform)$(Configuration);$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
@@ -243,8 +250,10 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
+	  <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\ExternalLib\$(Platform)$(Configuration);$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gtest_main.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
@@ -259,8 +268,11 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+	  <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
+	  <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\ExternalLib\Build\$(Platform)$(Configuration);$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gTest_main.lib;gTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
@@ -275,8 +287,10 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\ExternalLib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+	  <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
+	  <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\ExternalLib\Build\$(Platform)$(Configuration);$(ProjectDir)..\..\..\cppcore\Build\$(Platform)$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>Ole32.lib;User32.lib;Advapi32.lib;gTest_main.lib;gTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/INCLUDE:main %(AdditionalOptions)</AdditionalOptions>
@@ -287,19 +301,18 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.cpp" />
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.cpp" />
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp" />
     <ClCompile Include="FileTest.cpp" />
     <ClCompile Include="HelperTest.cpp" />
     <ClCompile Include="ParserTest.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.h" />
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.h" />
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.h" />
     <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Suseong-Html-Analyzer\Suseong-Html-Analyzer.vcxproj">
+      <Project>{506b23a3-f227-4a76-a71b-6a786b8015e2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

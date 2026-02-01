@@ -10,15 +10,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.cpp">
-      <Filter>Target</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.cpp">
-      <Filter>Target</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.cpp">
-      <Filter>Target</Filter>
-    </ClCompile>
     <ClCompile Include="FileTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
@@ -27,22 +18,10 @@
     <Filter Include="Test">
       <UniqueIdentifier>{cc771331-42b0-4497-b789-5c1421dde25e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Target">
-      <UniqueIdentifier>{dd9ffef2-28b3-44e9-8c54-cf0260f6284c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
       <Filter>Test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlAnalyzer.h">
-      <Filter>Target</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlHelper.h">
-      <Filter>Target</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Src\Suseong-Html-Analyzer\HtmlParser.h">
-      <Filter>Target</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
