@@ -12,7 +12,6 @@ struct ST_HTML_TOKEN
 class IHtmlParserHandler
 {
 public:
-	// virtual IHtmlParserHandler() {}
 	virtual ~IHtmlParserHandler() {}
 
 	virtual void OnTokenParsed(const ST_HTML_TOKEN& token) = 0;

@@ -56,7 +56,6 @@ ECODE main(int argc, char* argv[])
 	}
 
 	fclose(fp);
-
 	CHtmlParser HtmlParser;
 	CHtmlAnalyzer HtmlAnalyzer;
 
