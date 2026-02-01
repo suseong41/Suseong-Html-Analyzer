@@ -1,10 +1,2 @@
 #pragma once
-class CHtmlLoader
-{
-public:
-	CHtmlLoader();
-	~CHtmlLoader();
-private:
-	void load();
-};
-
+std::string HtmlLoad(const char* htmlfile, const char* targetUrl = nullptr);
