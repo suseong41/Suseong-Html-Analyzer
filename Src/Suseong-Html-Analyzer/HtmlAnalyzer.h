@@ -10,4 +10,12 @@ public:
 	void OnScriptTextParsed(const std::string& text) override;
 private:
 	void CheckScriptSrc(const std::string& src);
+	void ScanRansomeware();
+	void ScanExploitkit();
+	void ScanDownloader();
+	void ScanTrojan();
+	void ScanMiner();
+	void ScanVirus();
+	void ScanWorm();
+	void ScanBackDoor();
 };

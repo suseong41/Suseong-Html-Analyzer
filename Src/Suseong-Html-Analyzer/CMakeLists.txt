@@ -57,7 +57,7 @@ endforeach(SOURCE)
 ##############################################################
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../Inc)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../cppcore/Build/LinuxRelease)
-add_executable(${TARGET_NAME} ${SOURCES})
+add_library(${TARGET_NAME} STATIC ${SOURCES})
 
 target_link_libraries(${TARGET_NAME} 
     cppcore

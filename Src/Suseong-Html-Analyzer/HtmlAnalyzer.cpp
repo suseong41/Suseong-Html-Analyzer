@@ -36,3 +36,12 @@ void CHtmlAnalyzer::CheckScriptSrc(const std::string& src)
 {
 
 }
+
+void CHtmlAnalyzer::ScanRansomeware() {}
+void CHtmlAnalyzer::ScanExploitkit() {}
+void CHtmlAnalyzer::ScanDownloader() {}
+void CHtmlAnalyzer::ScanTrojan() {}
+void CHtmlAnalyzer::ScanMiner() {}
+void CHtmlAnalyzer::ScanVirus() {}
+void CHtmlAnalyzer::ScanWorm() {}
+void CHtmlAnalyzer::ScanBackDoor() {}

@@ -37,6 +37,8 @@ endfunction(include_to_list)
 ##############################################################
 # Glob all source files and filt-out later
 file(GLOB_RECURSE SOURCES *.cpp *.c)
+exclude_from_list(SOURCES "*/cmake-build-debug/*")
+exclude_from_list(SOURCES "*/CMakeFiles/*")
 set(PRODUCT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../Src/Suseong-Html-Analyzer")
 file(GLOB_RECURSE PRODUCT_SOURCES "${PRODUCT_DIR}/*.cpp")
 list(FILTER PRODUCT_SOURCES EXCLUDE REGEX "main.cpp$")
@@ -65,10 +67,10 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../cppcore/Build/LinuxRelease
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../ExternalLib/Build/LinuxRelease)
 add_executable(${TARGET_NAME} ${SOURCES})
 
-target_link_libraries(${TARGET_NAME} 
+target_link_libraries(${TARGET_NAME}
     cppcore
     gtest
     gtest_main
-    dl 
+    dl
     pthread
 )

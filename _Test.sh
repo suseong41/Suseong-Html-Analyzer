@@ -65,7 +65,45 @@ clean() {
   find "$ROOT" -type f \( -name "CMakeCache.txt" -o -name "cmake_install.cmake" -o -name "Makefile" \) -delete
 }
 
+usage() {
+    echo "Usage: $0 [OPTIONS]"
+    echo "Options:"
+    echo "  --clean    Execute clean only (remove build artifacts) and exit."
+    echo "  --help     Show this help message."
+}
+
+if [ $# -eq 0 ]; then
+    MODE="build"
+else
+    # 2. 인자가 있는 경우 파싱
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --clean)
+                MODE="clean"
+                shift # 인자 이동
+                ;;
+            --help)
+                usage
+                exit 0
+                ;;
+            *)
+                echo -e "${RED}Unknown option: $1${NC}"
+                usage
+                exit 1
+                ;;
+        esac
+    done
+fi
+
 # 실행
+
+if [ "$MODE" = "clean" ]; then
+    log_header "Cleanup Process Started"
+    clean
+    log_success "Clean Completed!"
+    exit 0
+fi
+
 log_header "Test Build Process Started"
 build
 log_success "Build Completed Successfully!"
@@ -87,9 +125,5 @@ else
     TEST_RESULT=1
 fi
 set -e
-
-log_header "Cleanup Process Started"
-clean
-log_success "CMake Clean Completed!"
 
 exit $TEST_RESULT
