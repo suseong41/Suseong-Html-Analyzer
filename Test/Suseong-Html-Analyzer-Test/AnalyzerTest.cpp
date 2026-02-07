@@ -51,9 +51,77 @@ TEST(ScanTest, Worm)
 {
 
 }
-
-TEST(ScanTest, BackDoor)
-{
-
-}
 */
+TEST(ScanTest, BackDoor_Normal)
+{
+    CHtmlParser parser;
+    CHtmlAnalyzer Analyzer;;
+    parser.SetHandler(&Analyzer);
+
+    std::string safeHtml =
+        "<html><body>"
+        "<form action=\"login.php\" method=POST>"
+        "<input type=hidden name=csrf_token value=12345>"
+        "<input type=\"text\" name=\"username\">"
+        "</form>"
+        "</body></html>";
+
+    parser.Parse(safeHtml.c_str(), safeHtml.length());
+    EXPECT_FALSE(Analyzer.isBackDoor());
+}
+
+TEST(ScanTest, BackDoor_C99)
+{
+    CHtmlParser parser;
+    CHtmlAnalyzer analyzer;
+    parser.SetHandler(&analyzer);
+
+    std::string maliciousHtml =
+        "<html><body>"
+        "<form action=\"?\" method=POST>"
+        // 명령 실행
+        "<input type=hidden name=act value=cmd>"
+        "<input type=\"text\" name=\"cmd\" size=\"50\" value=\"\">"
+        "<input type=submit value=\"Execute\">"
+        "</form>"
+        // 파일 업로드
+        "<form method=\"POST\" ENCTYPE=\"multipart/form-data\">"
+        "<input type=hidden name=act value=upload>"
+        "<input type=\"file\" name=\"uploadfile\">"
+        "</form>"
+        // 스크립트 키드워
+        "<script>"
+        "function ls_reverse_all() { var id = 1; }"
+        "</script>"
+        "</body></html>";
+
+    parser.Parse(maliciousHtml.c_str(), maliciousHtml.length());
+
+    EXPECT_TRUE(analyzer.isBackDoor());
+    std::string report = analyzer.getDetectionReport();
+    EXPECT_NE(report.find("[BackDoor]"), std::string::npos);
+    EXPECT_NE(report.find("C99 Shell"), std::string::npos);
+}
+
+TEST(ScanTest, BackDoor_ByroeNet)
+{
+    CHtmlParser parser;
+    CHtmlAnalyzer analyzer;
+    parser.SetHandler(&analyzer);
+
+    std::string maliciousHtml =
+        "<html><head><title>ByroeNet SheLL</title></head>"
+        "<body>"
+        "<form method=post enctype=\"multipart/form-data\">"
+        "<b>Execute command :</b><input size=100 name=\"_cmd\" value=\"\">"
+        "<input type=submit name=_act value=\"Execute!\">"
+        "<b>Change directory :</b><input size=100 name=\"_cwd\" value=\"\">"
+        "</form>"
+        "</body></html>";
+
+    parser.Parse(maliciousHtml.c_str(), maliciousHtml.length());
+
+    EXPECT_TRUE(analyzer.isBackDoor());
+    std::string report = analyzer.getDetectionReport();
+    EXPECT_NE(report.find("ByroeNet"), std::string::npos);
+}
