@@ -13,6 +13,9 @@
     <ClCompile Include="FileTest.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="AnalyzerTest.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Test">

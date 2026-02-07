@@ -9,11 +9,13 @@ public:
 	void OnTokenParsed(const ST_HTML_TOKEN& token) override;
 	void OnScriptTextParsed(const std::string& text) override;
 
+	bool isPhishingPattern();
 	bool isBackDoor();
 	std::string getDetectionReport();
 
 private:
 	void CheckScriptSrc(const std::string& src);
+	void ScanPhishing(const ST_HTML_TOKEN& token);
 	void ScanRansomeware(const ST_HTML_TOKEN& token);
 	void ScanExploitkit(const ST_HTML_TOKEN& token);
 	void ScanDownloader(const ST_HTML_TOKEN& token);
@@ -23,6 +25,7 @@ private:
 	void ScanWorm(const ST_HTML_TOKEN& token);
 	void ScanBackDoor(const ST_HTML_TOKEN& token);
 
-	bool m_backdoorSuspected;
+	bool m_phishingPattern;
+	bool m_backdoor;
 	std::string m_detection;
 };

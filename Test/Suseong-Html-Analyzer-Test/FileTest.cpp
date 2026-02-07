@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "../../Src/Suseong-Html-Analyzer/HtmlLoader.h"
 
-// ASSERT -> ��ȯ
-// EXPECT -> ��� ����
+// ASSERT -> return
+// EXPECT -> continue
 
 
 TEST(FileTest, ReadSample)

